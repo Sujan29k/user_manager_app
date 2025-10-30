@@ -8,46 +8,57 @@ class UserFormScreen extends StatefulWidget {
   const UserFormScreen({super.key, this.user});
 
   @override
-  _UserFormScreenState createState() => _UserFormScreenState();
+  State<UserFormScreen> createState() => _UserFormScreenState();
 }
 
 class _UserFormScreenState extends State<UserFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _jobController = TextEditingController();
+  final ApiService apiService = ApiService();
+
+  late TextEditingController _nameController;
+  late TextEditingController _jobController;
+
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    if (widget.user != null) {
-      _nameController.text =
-          "${widget.user!.firstName} ${widget.user!.lastName}";
-      _jobController.text = widget.user!.job ?? '';
-    }
+    _nameController = TextEditingController(text: widget.user?.name ?? '');
+    _jobController = TextEditingController(text: widget.user?.job ?? '');
   }
 
-  Future<void> _saveUser() async {
+  void _saveUser() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
+    // Automatically generate dummy avatar
+    final avatarUrl =
+        "https://robohash.org/${_nameController.text.replaceAll(' ', '_')}.png";
+
+    final newUser = User(
+      id: widget.user?.id,
+      name: _nameController.text,
+      job: _jobController.text,
+      avatar: avatarUrl,
+    );
+
     try {
       if (widget.user == null) {
-        await ApiService.createUser(_nameController.text, _jobController.text);
+        await apiService.createUser(newUser);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User created successfully!')),
+        );
       } else {
-        await ApiService.updateUser(
-          widget.user!.id,
-          _nameController.text,
-          _jobController.text,
+        await apiService.updateUser(widget.user!.id!, newUser);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User updated successfully!')),
         );
       }
-
       Navigator.pop(context);
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error: $e")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -58,6 +69,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.user == null ? "Add User" : "Edit User"),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,22 +79,23 @@ class _UserFormScreenState extends State<UserFormScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Name"),
+                decoration: const InputDecoration(labelText: "Full Name"),
                 validator: (value) =>
-                    value!.isEmpty ? "Name cannot be empty" : null,
+                    value!.isEmpty ? "Please enter a name" : null,
               ),
               TextFormField(
                 controller: _jobController,
-                decoration: const InputDecoration(labelText: "Job"),
+                decoration: const InputDecoration(labelText: "Job Title"),
                 validator: (value) =>
-                    value!.isEmpty ? "Job cannot be empty" : null,
+                    value!.isEmpty ? "Please enter a job title" : null,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
               _isLoading
                   ? const CircularProgressIndicator()
-                  : ElevatedButton(
+                  : ElevatedButton.icon(
                       onPressed: _saveUser,
-                      child: const Text("Save"),
+                      icon: const Icon(Icons.save),
+                      label: Text(widget.user == null ? "Save" : "Update"),
                     ),
             ],
           ),
