@@ -17,12 +17,12 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   void initState() {
     super.initState();
-    _usersFuture = apiService.getUsers();
+    _usersFuture = ApiService.getUsers();
   }
 
   void _refresh() {
     setState(() {
-      _usersFuture = apiService.getUsers();
+      _usersFuture = ApiService.getUsers();
     });
   }
 
@@ -48,7 +48,7 @@ class _UserListScreenState extends State<UserListScreen> {
 
     if (confirm == true) {
       try {
-        await apiService.deleteUser(user.id!);
+        await ApiService.deleteUser(user.id!);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("User deleted successfully!")),
         );

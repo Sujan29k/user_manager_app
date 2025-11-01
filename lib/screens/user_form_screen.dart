@@ -45,12 +45,12 @@ class _UserFormScreenState extends State<UserFormScreen> {
 
     try {
       if (widget.user == null) {
-        await apiService.createUser(newUser);
+        await ApiService.createUser(newUser);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('User created successfully!')),
         );
       } else {
-        await apiService.updateUser(widget.user!.id!, newUser);
+        await ApiService.updateUser(widget.user!.id!, newUser);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('User updated successfully!')),
         );

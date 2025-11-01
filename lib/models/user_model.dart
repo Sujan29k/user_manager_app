@@ -4,28 +4,23 @@ class User {
   final String job;
   final String avatar;
 
-  User({
-    this.id,
-    required this.name,
-    required this.job,
-    required this.avatar,
-  });
+  User({this.id, required this.name, required this.job, required this.avatar});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
-      name: "${json['firstName']} ${json['lastName']}",
-      job: json['company'] != null ? json['company']['title'] ?? '' : '',
-      avatar: json['image'] ?? '',
+      name: "${json['first_name'] ?? ''} ${json['last_name'] ?? ''}",
+      job:
+          json['job'] ??
+          'No job specified', // ReqRes doesn't return job in GET, but does in POST/PUT
+      avatar: json['avatar'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'firstName': name.split(' ').first,
-      'lastName': name.split(' ').length > 1 ? name.split(' ')[1] : '',
-      'company': {'title': job},
-      'image': avatar,
+      'name': name, // ReqRes POST/PUT expects 'name' field
+      'job': job, // ReqRes POST/PUT expects 'job' field
     };
   }
 }
