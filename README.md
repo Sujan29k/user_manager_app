@@ -66,46 +66,13 @@ DELETE https://reqres.in/api/users/{id}      # Delete user
 
 ## 📸 Screenshots & App Workflow
 
-### 1. **User List Screen**
-
-Main screen showing all users fetched from ReqRes API
-
-![User List Screen](screenshots/user_list.png)
-
-**Features:** User avatars, names, emails with edit/delete buttons and FAB to add users
-
-### 2. **Add User Screen**
-
-Form for creating new users
-
-![Add User Screen](screenshots/add_user.png)
-
-**Features:** Clean form with validation for name and job fields
-
-### 3. **Edit User Screen**
-
-Form for updating existing user information
-
-![Edit User Screen](screenshots/edit_user.png)
-
-**Features:** Pre-populated form with same validation as add screen
-
-### 4. **Delete Confirmation Dialog**
-
-Safety confirmation before deleting users
-
-![Delete Confirmation](screenshots/delete_confirmation.png)
-
-**Features:** Clear confirmation with user context and action buttons
-
-### 5. **Success/Error Messages**
-
-Feedback notifications for user actions
-
-![Success Message](screenshots/success_message.png)
-![Error Message](screenshots/error_message.png)
-
-**Features:** Color-coded messages that auto-dismiss after few seconds
+| Screen | Preview | Features |
+|--------|---------|----------|
+| **User List** | ![User List](screenshots/user_list.png) | User avatars, names, emails with edit/delete buttons and FAB |
+| **Add User** | ![Add User](screenshots/add_user.png) | Clean form with validation for name and job fields |
+| **Edit User** | ![Edit User](screenshots/edit_user.png) | Pre-populated form with same validation as add screen |
+| **Delete Confirmation** | ![Delete Confirmation](screenshots/delete_confirmation.png) | Clear confirmation with user context and action buttons |
+| **Success/Error Messages** | ![Success](screenshots/success_message.png) ![Error](screenshots/error_message.png) | Color-coded messages that auto-dismiss after few seconds |
 
 ## 🔄 App Workflow
 
