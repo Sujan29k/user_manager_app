@@ -11,7 +11,6 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  final ApiService apiService = ApiService();
   late Future<List<User>> _usersFuture;
 
   @override
@@ -64,7 +63,19 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("User List"), centerTitle: true),
+      backgroundColor: Colors.grey[100],
+
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.blueAccent,
+        title: const Text(
+          "👥 User Directory",
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.1),
+        ),
+        centerTitle: true,
+      ),
+
+      // ✅ User List
       body: FutureBuilder<List<User>>(
         future: _usersFuture,
         builder: (context, snapshot) {
@@ -76,19 +87,41 @@ class _UserListScreenState extends State<UserListScreen> {
           }
 
           final users = snapshot.data!;
+          if (users.isEmpty) {
+            return const Center(
+              child: Text(
+                "No users found 👀",
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            );
+          }
+
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             itemCount: users.length,
             itemBuilder: (context, index) {
               final user = users[index];
               return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 2,
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(user.avatar),
+                    radius: 28,
                   ),
-                  title: Text(user.name),
+                  title: Text(
+                    user.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
                   subtitle: Text(
                     user.job.isNotEmpty ? user.job : 'No job info',
+                    style: const TextStyle(color: Colors.grey),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -117,15 +150,36 @@ class _UserListScreenState extends State<UserListScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const UserFormScreen()),
-          );
-          _refresh();
-        },
-        child: const Icon(Icons.add),
+
+      // ✅ Add Button at Bottom (instead of FAB)
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: double.infinity,
+            height: 55,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const UserFormScreen()),
+                );
+                _refresh();
+              },
+              icon: const Icon(Icons.add_circle_outline, color: Colors.white),
+              label: const Text(
+                "Add User",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

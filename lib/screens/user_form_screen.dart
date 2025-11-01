@@ -13,7 +13,6 @@ class UserFormScreen extends StatefulWidget {
 
 class _UserFormScreenState extends State<UserFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  final ApiService apiService = ApiService();
 
   late TextEditingController _nameController;
   late TextEditingController _jobController;
@@ -32,15 +31,13 @@ class _UserFormScreenState extends State<UserFormScreen> {
 
     setState(() => _isLoading = true);
 
-    // Automatically generate dummy avatar
-    final avatarUrl =
-        "https://robohash.org/${_nameController.text.replaceAll(' ', '_')}.png";
-
     final newUser = User(
       id: widget.user?.id,
       name: _nameController.text,
       job: _jobController.text,
-      avatar: avatarUrl,
+      avatar:
+          widget.user?.avatar ??
+          '', // Keep existing avatar for updates, empty for new users
     );
 
     try {
@@ -57,8 +54,9 @@ class _UserFormScreenState extends State<UserFormScreen> {
       }
       Navigator.pop(context);
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error: $e')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     } finally {
       setState(() => _isLoading = false);
     }
