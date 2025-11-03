@@ -72,9 +72,9 @@ DELETE https://reqres.in/api/users/{id}      # Delete user
 | **Add User** | ![Add User](screenshots/add_user.png) | Clean form with validation for name and job fields |
 | **Edit User** | ![Edit User](screenshots/edit_user.png) | Pre-populated form with same validation as add screen |
 | **Delete Confirmation** | ![Delete Confirmation](screenshots/delete_confirmation.png) | Clear confirmation with user context and action buttons |
-| **Search_userby name** | ![Enter name](screenshots/search_option.png) | Clear confirmation with user context and action buttons |
-| **Dark mode** | ![toggle button for dark mode](screenshots/dark_mode.png) | Clear confirmation with user context and action buttons |
-| **Profil page** | ![check profile ](screenshots/profile_page.png) | Clear confirmation with user context and action buttons |
+| **Search_userby name** | ![Enter name](screenshots/search_option.png) | type the name or the letter in that person name to search him on the top list |
+| **Dark mode** | ![toggle button for dark mode](screenshots/dark_mode.png) | toggle that moon or sun button for toggling the dark and light mode |
+| **Profil page** | ![check profile ](screenshots/profile_page.png) | check profile by just tapping at the user  |
 
 ## 🔄 App Workflow
 
