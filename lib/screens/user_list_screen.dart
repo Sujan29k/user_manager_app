@@ -5,7 +5,9 @@ import 'user_form_screen.dart';
 import 'user_detail_screen.dart';
 
 class UserListScreen extends StatefulWidget {
-  const UserListScreen({super.key});
+  final Function(bool)? onThemeChanged;
+
+  const UserListScreen({super.key, this.onThemeChanged});
 
   @override
   State<UserListScreen> createState() => _UserListScreenState();
@@ -38,7 +40,7 @@ class _UserListScreenState extends State<UserListScreen> {
         _filteredUsers = _allUsers.where((user) {
           final name = user.name.toLowerCase();
           // final job = user.job.toLowerCase();
-          return name.contains(lowerQuery) ;
+          return name.contains(lowerQuery);
         }).toList();
       }
     });
@@ -88,16 +90,32 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: const Text(
           "👥 User Directory",
           style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.1),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            tooltip: Theme.of(context).brightness == Brightness.dark
+                ? 'Switch to Light Mode'
+                : 'Switch to Dark Mode',
+            onPressed: () {
+              final isDark = Theme.of(context).brightness == Brightness.light;
+              widget.onThemeChanged?.call(isDark);
+            },
+          ),
+        ],
       ),
 
       // ✅ User List
@@ -148,14 +166,18 @@ class _UserListScreenState extends State<UserListScreen> {
                           )
                         : null,
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Theme.of(context).cardColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),

@@ -12,7 +12,7 @@ class UserDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: const Text(
           'User Details',
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -41,9 +41,11 @@ class UserDetailScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: 300,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.blueAccent, Colors.purpleAccent],
+                    colors: Theme.of(context).brightness == Brightness.dark
+                        ? [Colors.grey[800]!, Colors.grey[900]!]
+                        : [Colors.blueAccent, Colors.purpleAccent],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -62,6 +64,7 @@ class UserDetailScreen extends StatelessWidget {
 
             // User information cards
             _buildInfoCard(
+              context,
               icon: Icons.person,
               title: 'Full Name',
               value: user.name,
@@ -69,6 +72,7 @@ class UserDetailScreen extends StatelessWidget {
             ),
 
             _buildInfoCard(
+              context,
               icon: Icons.work,
               title: 'Job Title',
               value: user.job.isNotEmpty ? user.job : 'Not specified',
@@ -76,6 +80,7 @@ class UserDetailScreen extends StatelessWidget {
             ),
 
             _buildInfoCard(
+              context,
               icon: Icons.badge,
               title: 'User ID',
               value: '#${user.id}',
@@ -89,7 +94,8 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard({
+  Widget _buildInfoCard(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String value,
@@ -120,17 +126,21 @@ class UserDetailScreen extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey[600],
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey[400]
+                          : Colors.grey[600],
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     value,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black87,
                     ),
                   ),
                 ],

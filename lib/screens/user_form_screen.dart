@@ -63,10 +63,10 @@ class _UserFormScreenState extends State<UserFormScreen> {
     final bool isEdit = widget.user != null;
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: Text(
           isEdit ? "Edit User" : "Add User",
           style: const TextStyle(
@@ -86,11 +86,13 @@ class _UserFormScreenState extends State<UserFormScreen> {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.black.withOpacity(0.3)
+                          : Colors.black.withOpacity(0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -104,7 +106,10 @@ class _UserFormScreenState extends State<UserFormScreen> {
                         labelText: "Full Name",
                         prefixIcon: const Icon(Icons.person_outline),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor:
+                            Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[800]
+                            : Colors.grey[100],
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -120,7 +125,10 @@ class _UserFormScreenState extends State<UserFormScreen> {
                         labelText: "Job Title",
                         prefixIcon: const Icon(Icons.work_outline),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor:
+                            Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[800]
+                            : Colors.grey[100],
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
