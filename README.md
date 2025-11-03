@@ -72,7 +72,9 @@ DELETE https://reqres.in/api/users/{id}      # Delete user
 | **Add User** | ![Add User](screenshots/add_user.png) | Clean form with validation for name and job fields |
 | **Edit User** | ![Edit User](screenshots/edit_user.png) | Pre-populated form with same validation as add screen |
 | **Delete Confirmation** | ![Delete Confirmation](screenshots/delete_confirmation.png) | Clear confirmation with user context and action buttons |
-| **Success/Error Messages** | ![Success](screenshots/success_message.png) ![Error](screenshots/error_message.png) | Color-coded messages that auto-dismiss after few seconds |
+| **Search_userby name** | ![Enter name](screenshots/search_option.png) | Clear confirmation with user context and action buttons |
+| **Dark mode** | ![toggle button for dark mode](screenshots/dark_mode.png) | Clear confirmation with user context and action buttons |
+| **Profil page** | ![check profile ](screenshots/profile_page.png) | Clear confirmation with user context and action buttons |
 
 ## 🔄 App Workflow
 
