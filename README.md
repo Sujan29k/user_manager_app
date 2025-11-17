@@ -110,7 +110,7 @@ DELETE https://reqres.in/api/users/{id}      # Delete user
 - [ ] User profile pictures upload
 - [ ] Dark mode theme
 - [ ] Unit and integration tests
-- [ ] CI/CD pipeline setup
+
 
 
 ## 🤝 Contributing
